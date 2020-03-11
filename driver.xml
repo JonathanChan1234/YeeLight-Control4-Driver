@@ -1,0 +1,285 @@
+<devicedata>
+  <copyright>Copyright 2019 HKT Limited. All Rights Reserved.</copyright>
+  <manufacturer>YEELIGHT</manufacturer>
+  <version>1</version>
+  <creator>Alex Lee HKT Smart Living Engineering </creator>
+  <created>07/12/2019 10:48 AM</created>
+  <modified>03/03/2020 3:00 PM</modified>
+  <model>YLDP06YL</model>
+  <composer_categories>
+    <category>Lights</category>
+  </composer_categories>
+  <front />
+  <back />
+  <top />
+  <bottom />
+  <left />
+  <right />
+  <small>devices_sm/LutronDimmer.gif</small>
+  <large>devices_lg/LutronDimmer.gif</large>
+  <name>YEELIGHT SMART LED BULB TEST</name>
+  <control>lua_gen</control>
+  <proxies qty="5">
+    <proxy proxybindingid="5001" name="Brightness">light_v2</proxy>
+    <proxy proxybindingid="5002" name="Color Temperature">light_v2</proxy>
+    <proxy proxybindingid="5003" name="Red Channel">light_v2</proxy>
+    <proxy proxybindingid="5004" name="Green Channel">light_v2</proxy>
+    <proxy proxybindingid="5005" name="Blue Channel">light_v2</proxy>
+    <proxy proxybindingid="5006" name="Online">light_v2</proxy>
+  </proxies>
+  <driver>DriverWorks</driver>
+  <config>
+    <identify_text>To Be Determined.</identify_text>
+    <properties>
+      <property>
+        <name>Device IP Address</name>
+        <type>STRING</type>
+        <default></default>
+        <readonly>false</readonly>
+      </property>
+      <property>
+        <name>Debug Mode</name>
+        <type>LIST</type>
+        <items>
+          <item>Off</item>
+          <item>Print</item>
+          <item>Log</item>
+          <item>Print and Log</item>
+        </items>
+        <default>Off</default>
+      </property>
+      <property>
+        <name>Brightness</name>
+        <type>STRING</type>
+        <readonly>true</readonly>
+        <default></default>
+      </property>
+      <property>
+        <name>Color Temperature</name>
+        <type>STRING</type>
+        <default></default>
+        <readonly>true</readonly>
+      </property>
+      <property>
+        <name>Red Value</name>
+        <type>STRING</type>
+        <default></default>
+        <readonly>true</readonly>
+      </property>
+      <property>
+        <name>Green Value</name>
+        <type>STRING</type>
+        <default></default>
+        <readonly>true</readonly>
+      </property>
+      <property>
+        <name>Blue Value</name>
+        <type>STRING</type>
+        <default></default>
+        <readonly>true</readonly>
+      </property>
+      <property>
+        <name>Connection Status</name>
+        <type>STRING</type>
+        <readonly>false</readonly>
+      </property>
+    </properties>
+    <actions>
+      <action>
+        <name>Initialize Light Proxy Data</name>
+        <command>InitLightProxy</command>
+      </action>
+    </actions>
+    <commands>
+      <command>
+        <name>Initialize Light Proxy Data</name>
+        <description>Initialize Light Proxy Data NAME</description>
+      </command>
+    </commands>
+    <script file="driver.lua"></script>
+    <documentation file="documentation.rtf" />
+  </config>
+  <capabilities>
+    <dimmer>True</dimmer>
+    <on_off>True</on_off>
+    <num_buttons>5</num_buttons>
+    <has_leds>True</has_leds>
+    <set_level>True</set_level>
+    <click_rates>True</click_rates>
+    <hold_rates>False</hold_rates>
+    <ramp_level>True</ramp_level>
+    <cold_start>False</cold_start>
+    <can_detach_buttons>False</can_detach_buttons>
+    <can_detach_led>False</can_detach_led>
+    <has_press_events>True</has_press_events>
+    <has_release_events>True</has_release_events>
+    <single_button>True</single_button>
+    <double_button>False</double_button>
+    <do_push>False</do_push>
+    <do_release>False</do_release>
+    <double_tap_top>False</double_tap_top>
+    <double_tap_bottom>False</double_tap_bottom>
+    <triple_tap_top>False</triple_tap_top>
+    <triple_tap_bottom>False</triple_tap_bottom>
+    <button_events>False</button_events>
+    <can_buttonpress_device>False</can_buttonpress_device>
+    <hide_proxy_events>False</hide_proxy_events>
+    <hide_proxy_properties>True</hide_proxy_properties>
+    <advanced_scene_support>True</advanced_scene_support>
+    <has_load>True</has_load>
+    <buttons_are_virtual>False</buttons_are_virtual>
+    <load_group_support>True</load_group_support>
+    <has_extras>True</has_extras>
+    <reports_level>False</reports_level>
+  </capabilities>
+  <connections>
+    <connection>
+      <id>5001</id>
+      <facing>6</facing>
+      <connectionname>Light</connectionname>
+      <type>2</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>False</linelevel>
+      <classes>
+        <class>
+          <classname>LIGHT_V2</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>5002</id>
+      <facing>6</facing>
+      <connectionname>Light</connectionname>
+      <type>2</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>False</linelevel>
+      <classes>
+        <class>
+          <classname>LIGHT_V2</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>5003</id>
+      <facing>6</facing>
+      <connectionname>Light</connectionname>
+      <type>2</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>False</linelevel>
+      <classes>
+        <class>
+          <classname>LIGHT_V2</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>5004</id>
+      <facing>6</facing>
+      <connectionname>Light</connectionname>
+      <type>2</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>False</linelevel>
+      <classes>
+        <class>
+          <classname>LIGHT_V2</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>5005</id>
+      <facing>6</facing>
+      <connectionname>Light</connectionname>
+      <type>2</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>False</linelevel>
+      <classes>
+        <class>
+          <classname>LIGHT_V2</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>300</id>
+      <facing>6</facing>
+      <connectionname>ON Button Link</connectionname>
+      <type>1</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>True</linelevel>
+      <classes>
+        <class>
+          <classname>BUTTON_LINK</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>301</id>
+      <facing>6</facing>
+      <connectionname>OFF Button Link</connectionname>
+      <type>1</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>True</linelevel>
+      <classes>
+        <class>
+          <classname>BUTTON_LINK</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <id>302</id>
+      <facing>6</facing>
+      <connectionname>Toggle Button Link</connectionname>
+      <type>1</type>
+      <consumer>False</consumer>
+      <audiosource>False</audiosource>
+      <videosource>False</videosource>
+      <linelevel>True</linelevel>
+      <classes>
+        <class>
+          <classname>BUTTON_LINK</classname>
+        </class>
+      </classes>
+    </connection>
+    <connection>
+      <type>4</type>
+      <id>6001</id>
+      <audiosource>false</audiosource>
+      <videosource>false</videosource>
+      <connectionname>YEELIGHT</connectionname>
+      <facing>1</facing>
+      <consumer>false</consumer>
+      <linelevel>true</linelevel>
+      <classes>
+        <class>
+          <classname>TCP</classname>
+          <ports>
+            <port>
+              <number>55443</number>
+              <auto_connect>true</auto_connect>
+              <monitor_connection>true</monitor_connection>
+              <keep_connection>true</keep_connection>
+              <suppress_connection_events>true</suppress_connection_events>
+            </port>
+          </ports>
+        </class>
+      </classes>
+    </connection>
+  </connections>
+  <states />
+  <conditionals />
+  <events />
+  <controlmethod>ip</controlmethod>
+</devicedata>

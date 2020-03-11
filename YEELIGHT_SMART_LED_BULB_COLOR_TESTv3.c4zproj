@@ -1,0 +1,19 @@
+﻿<Driver type="c4z" name="YEELIGHT_SMART_LED_BULB_COLOR_TESTv3">
+ <Items>
+  <Item type="dir" c4zDir="common" name="common" recurse="true" exclude="false" />
+  <Item type="dir" c4zDir="icons" name="icons" recurse="true" exclude="false" />
+  <Item type="dir" c4zDir="lib" name="lib" recurse="true" exclude="false" />
+  <Item type="dir" c4zDir="www" name="www" recurse="true" exclude="false" />
+  <Item type="file" name="action.lua" />
+  <Item type="file" name="connection.lua" />
+  <Item type="file" name="documentation.rtf" />
+  <Item type="file" name="driver.lua" />
+  <Item type="file" name="driver.xml" />
+  <Item type="file" name="network.lua" />
+  <Item type="file" name="properties.lua" />
+  <Item type="file" name="proxy.lua" />
+  <Item type="file" name="constant.lua" />
+  <Item type="file" name="utils.lua" />
+  <Item type="file" name="yeelight_command.lua" />
+ </Items>
+</Driver>
