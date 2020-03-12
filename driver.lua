@@ -183,7 +183,9 @@ function quote(str) return "\"" .. str .. "\"" end
 function convertRGBToDec(red, green, blue)
     -- type check
     if (type(red) ~= "number") then error("red must be in type of number") end
-    if (type(green) ~= "number") then error("green must be in type of number") end
+    if (type(green) ~= "number") then
+        error("green must be in type of number")
+    end
     if (type(blue) ~= "number") then error("blue must be in type of number") end
     return red * 65536 + green * 256 + blue
 end
@@ -198,14 +200,8 @@ function convertDecToRGB(value)
     red = math.floor(value / (256 * 256));
     green = math.floor(value / 256) % 256;
     blue = value % 256;
-    return {
-        red = red,
-        green = green,
-        blue = blue
-    }
+    return {red = red, green = green, blue = blue}
 end
-
-
 
 --[[
     Save the last rgb, color temperature value
@@ -302,9 +298,7 @@ function SET_COLOR(color, brightness)
     local setBrightness = (brightness == nil) and LastBrightness or brightness
     dbg("set brightness to: " .. tostring(setBrightness))
     Mode = "RGB"
-    sendToYeeLight(1, "set_scene", {
-        "color", color, setBrightness
-    })
+    sendToYeeLight(1, "set_scene", {"color", color, setBrightness})
 end
 
 -- Set color temperature function
@@ -315,8 +309,6 @@ function SET_TEMP(temperature, brightness)
         "ct", temperature, (brightness == nil) and LastBrightness or brightness
     })
 end
-
-
 
 C4:CreateNetworkConnection(6001, g_deviceAddress, "Telnet")
 
@@ -350,7 +342,8 @@ function ReceivedFromNetwork(idBinding, nPort, receivestring)
         if key == "rgb" then
             print("rgb: " .. value)
             local rgb = convertDecToRGB(value)
-		  dbg("RGB Feedback: (" ..rgb["red"].. ",".. rgb["green"] .. "," .. rgb["blue"] .. ")")
+            dbg("RGB Feedback: (" .. rgb["red"] .. "," .. rgb["green"] .. "," ..
+                    rgb["blue"] .. ")")
             updateLightProperty(rgb["red"], rgb["green"], rgb["blue"], nil, nil)
         end
         if key == "ct" then
@@ -359,7 +352,6 @@ function ReceivedFromNetwork(idBinding, nPort, receivestring)
         end
     end
 end
-
 
 -- Release things this driver had allocated...
 function OnDriverDestroyed()
@@ -497,7 +489,7 @@ function RgbChangeHandler(idBinding, strCommand, tParams)
     -- Level Ramp Action
     if (strCommand == "RAMP_TO_LEVEL") then
         dbg("Ramping level, RGB")
-	   PrintTable(tParams)
+        PrintTable(tParams)
         local level = tonumber(tParams["LEVEL"])
         if (idBinding == RedlightProxyBinding) then
             RedValue = math.ceil(level * 255 / 100)
@@ -506,14 +498,15 @@ function RgbChangeHandler(idBinding, strCommand, tParams)
         elseif (idBinding == BluelightProxyBinding) then
             BlueValue = math.ceil(level * 255 / 100)
         end
-	   dbg("RGB Change Handler: (" .. RedValue .. ",".. GreenValue .. "," .. BlueValue .. ")")
+        dbg("RGB Change Handler: (" .. RedValue .. "," .. GreenValue .. "," ..
+                BlueValue .. ")")
         RGB = (RedValue * 65536) + (GreenValue * 256) + BlueValue
 
         if (RGB == 0) then
             SET_TEMP((TempLevel == 0) and 1700 or
                          math.floor(1700 + (TempLevel - 1) * 48.4848), nil)
         else
-		  print(RGB)
+            print(RGB)
             SET_COLOR(RGB, nil)
         end
 
@@ -521,7 +514,9 @@ function RgbChangeHandler(idBinding, strCommand, tParams)
     elseif (strCommand == "BUTTON_ACTION") then
         local action = tParams["ACTION"]
         if (action == "2") then
-		  dbg("RGB Before Change: (" .. RedValue .. ",".. GreenValue .. "," .. BlueValue .. ")")
+            dbg(
+                "RGB Before Change: (" .. RedValue .. "," .. GreenValue .. "," ..
+                    BlueValue .. ")")
             if (idBinding == RedlightProxyBinding) then
                 RedValue = (RedLevel == 0) and 255 or 0
             elseif (idBinding == GreenlightProxyBinding) then
@@ -530,7 +525,8 @@ function RgbChangeHandler(idBinding, strCommand, tParams)
                 BlueValue = (BlueLevel == 0) and 255 or 0
             end
             RGB = (RedValue * 65536) + (GreenValue * 256) + BlueValue
-		  dbg("RGB After change: (" .. RedValue .. ",".. GreenValue .. "," .. BlueValue .. ")")
+            dbg("RGB After change: (" .. RedValue .. "," .. GreenValue .. "," ..
+                    BlueValue .. ")")
             if (RGB == 0) then
                 SET_TEMP((TempLevel == 0) and 0 or
                              math.floor(1700 + (TempLevel - 1) * 48.4848), nil)
@@ -620,18 +616,20 @@ function CommandInterpreter(idBinding, strCommand, tParams)
                 SendToProxy(lightProxyBinding, "ONLINE_CHANGED", "True")
                 -- Button Click Action
             elseif (strCommand == "BUTTON_ACTION") then
-			 dbg("Brightness Button Action")
+                dbg("Brightness Button Action")
                 local action = tParams["ACTION"]
                 dbg("action:" .. action)
                 if (action == "2") then
                     -- If the brightness is 0, restore the last state
                     if (Brightness == 0) then
                         if (Mode == "Temp") then
-					   dbg("Brightness on change: (" .. Brightness .. ")")
+                            dbg("Brightness on change: (" .. Brightness .. ")")
                             SET_TEMP(LastTempValue, nil)
                         end
                         if (Mode == "RGB") then
-					   dbg("Brightness on change: (" .. RedValue .. ",".. GreenValue .. "," .. BlueValue .. "," .. Brightness .. ")")
+                            dbg("Brightness on change: (" .. RedValue .. "," ..
+                                    GreenValue .. "," .. BlueValue .. "," ..
+                                    Brightness .. ")")
                             SET_COLOR(convertRGBToDec(LastRedValue,
                                                       LastGreenValue,
                                                       LastBlueValue),
@@ -685,18 +683,20 @@ function CommandInterpreter(idBinding, strCommand, tParams)
                 TOGGLE_PRESET(tParams)
 
             elseif (strCommand == "RAMP_TO_LEVEL") then
-			 dbg("Brightness Ramp Level")
+                dbg("Brightness Ramp Level")
                 local lightLevel = tonumber(tParams["LEVEL"])
                 if lightLevel == 0 then
                     YOFF()
                 else
                     if Mode == "RGB" then
-				    dbg("Brightness on change: (" .. RedValue .. ",".. GreenValue .. "," .. BlueValue .. "," .. lightLevel .. ")")
+                        dbg("Brightness on change: (" .. RedValue .. "," ..
+                                GreenValue .. "," .. BlueValue .. "," ..
+                                lightLevel .. ")")
                         SET_COLOR(convertRGBToDec(RedValue, GreenValue,
                                                   BlueValue), lightLevel)
                     end
                     if Mode == "Temp" then
-				    dbg("Brightness on change: (" .. lightLevel .. ")")
+                        dbg("Brightness on change: (" .. lightLevel .. ")")
                         SET_TEMP(TempValue, lightLevel)
                     end
                 end

@@ -12,7 +12,7 @@
   <Item type="file" name="network.lua" />
   <Item type="file" name="properties.lua" />
   <Item type="file" name="proxy.lua" />
-  <Item type="file" name="constant.lua" />
+  <Item type="file" name="constants.lua" />
   <Item type="file" name="utils.lua" />
   <Item type="file" name="yeelight_command.lua" />
  </Items>
