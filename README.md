@@ -31,7 +31,7 @@ Set brightness
 {"id":1,"method":"adjust_bright","params":[50, 500]}
 ```
 
-### Proxy
+### Proxy Binding Id
 
 5001: Brightness
 
@@ -43,31 +43,10 @@ Set brightness
 
 5005: Blue
 
-#### Variables:
+### Control Binding Id
 
-1. g_deviceAddress: ip address of the led light bulb
-2. (redValue, redLevel), (blueValue, blueLevel), (greenValue, greenLevel): app (proxy) light level, actual light level
+301: On Button Link
 
-### Program Flow
+302: Off Button Link
 
-1. App ==> Controller
-   ReceivedFromProxy(idBinding, strCommand, tParams) -> CommandInterpreter -> send command to yeelight bulb through ip network
-2. Light ==> Controller
-
-    Create Telnet connection between light and controller
-
-    C4:CreateNetworkConnection(6001, g_deviceAddress , "Telnet")
-
-    Received Response from the light
-
-    function ReceivedFromNetwork(idBinding, nPort, strData)
-
-3. Controller ==> App
-   C4:SendToProxy(idBinding, strCommand, tParams, strmessage)
-
-### Command Intepreter (Received From Proxy)
-
-#### Color Temperature Binding (5001)
-
-1. Set RGB to all 0
-2. If the command is "RAMP_TO_LEVEL",
+303: Toggle Button Link

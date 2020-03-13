@@ -8,9 +8,8 @@
     4. Set Brightness
     5. Set Color Temperature
     6. Set RGB Color
---]]
-
-require "utils"
+--]] require "utils"
+require "lighting_profile"
 
 --[[
     Send command to YeeLight through TCP Telent
@@ -31,10 +30,10 @@ function sendToYeeLight(id, method, params)
     end
     -- check valid ip address
     if (Properties["Device IP Address"] == nil) then
-	   dbg("Empty/Invalid Device IP Address")
-	   return
+        dbg("Empty/Invalid Device IP Address")
+        return
     end
-    
+
     local command_table = {id = id, method = method, params = params}
     local command = C4:JsonEncode(command_table, false, true) .. "\r\n"
     dbg("Sent Command to Network: " .. command)
@@ -64,23 +63,19 @@ end
 -- Set brightness level
 function SET_BRIGHT(brightness)
     dbg("set bright level" .. brightness)
-    sendToYeeLight(1, "adjust_bright", {brightness, 500)
+    sendToYeeLight(1, "adjust_bright", {brightness, 500})
 end
 
 -- Set RGB Color
 function SET_COLOR(color, brightness)
-    --TODO: change Properties["Brightness"] to PersistTable["Brightness"]
     dbg("set rgb to: " .. color)
-    local setBrightness = brightness or Properties["Brightness"]
+    local setBrightness = brightness or RetrieveLastBrightness()
     sendToYeeLight(1, "set_scene", {"color", color, setBrightness})
 end
 
 -- Set color temperature
 function SET_TEMP(temperature, brightness)
-    -- TODO: change Properties["Brightness"] to PersistTable["Brightness"]
     dbg("set color temperature to " .. temperature)
-    local setBrightness = brightness or Properties["Brightness"]
-    sendToYeeLight(1, "set_scene", {
-        "ct", temperature, setBrightness
-    })
+    local setBrightness = brightness or RetrieveLastBrightness()
+    sendToYeeLight(1, "set_scene", {"ct", temperature, setBrightness})
 end
