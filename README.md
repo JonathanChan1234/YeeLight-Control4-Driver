@@ -28,7 +28,7 @@ Set scene
 {"id":1,"method":"set_scene","params":["color",10027008, 85]}
 
 Set brightness
-{"id":1,"method":"adjust_bright","params":[50, 500]}
+{"id":1,"method":"adjust_bright","params":[-10, 500]}
 ```
 
 ### Proxy Binding Id

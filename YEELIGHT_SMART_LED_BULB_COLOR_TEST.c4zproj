@@ -1,4 +1,4 @@
-﻿<Driver type="c4z" name="YEELIGHT_SMART_LED_BULB_COLOR_TESTv3">
+﻿<Driver type="c4z" name="YEELIGHT_SMART_LED_BULB_COLOR_TEST">
  <Items>
   <Item type="dir" c4zDir="common" name="common" recurse="true" exclude="false" />
   <Item type="dir" c4zDir="icons" name="icons" recurse="true" exclude="false" />
@@ -15,5 +15,6 @@
   <Item type="file" name="constants.lua" />
   <Item type="file" name="utils.lua" />
   <Item type="file" name="yeelight_command.lua" />
+  <Item type="file" name="lighting_profile.lua" />
  </Items>
 </Driver>

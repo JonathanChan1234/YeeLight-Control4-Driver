@@ -17,4 +17,17 @@ function OnVariableChanged(strName) dbg("OnVariableChanged(" .. strName .. ")") 
 
 -----------------------------  INIT   -----------------------------
 -- Fire On Property Changed to set the initial Headers and other Property global sets, they'll change if Property is changed.
-function OnDriverInit() for k, v in pairs(Properties) do OnPropertyChanged(k) end end
+do
+  if (C4.GetDriverConfigInfo) then
+    VERSION = C4:GetDriverConfigInfo ("version")
+  else
+    VERSION = 'check version with info...'
+  end
+end
+
+function OnDriverLateInit()
+    OnPropertyChanged ('Driver Version')
+    -- Only for development stage
+    PersistData["YEELIGHT_PROFILE"] = {}
+    PersistData["YEELIGHT_HISTORY"] = {}
+end

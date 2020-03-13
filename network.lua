@@ -32,20 +32,20 @@ function ReceivedFromNetwork(idBinding, nPort, receivestring)
 
     for key, value in pairs(response["params"]) do
         if key == "power" then
-            if value == "low" then
+            if value == "off" then
                 -- Save the previous lighting state after turning off
-                UpdateLightHistory()
+                SaveLightingHistory()
                 UpdateLightProperty(0, 0, 0, 0, 1700, nil, nil)
             else
                 local history = RetrieveLightingHistory()
                 if Mode == TEMPERATURE_MODE then
-                    UpdateLightProperty(0, 0, 0, history["brightness"],
+                    UpdateLightProperty(0, 0, 0, 100,
                                         history["temperature"], nil)
                 end
                 if Mode == RGB_MODE then
                     UpdateLightProperty(history["red"], history["green"],
-                                        history["blue"], history["brightness"],
-                                        0, nil)
+                                        history["blue"], 100,
+                                        1700, nil)
                 end
             end
         end
@@ -126,16 +126,4 @@ function UpdateLightProperty(red, green, blue, brightness, colorTemperature,
     SaveLightingProfile(red, green, blue, brightness, colorTemperature, mode)
 end
 
--- Save the lighting profile (current status)
-function SaveLightingProfile(red, green, blue, temperature, brightness, mode)
-    if (mode ~= nil) then PersistData["YEELIGHT_PROFILE"]["mode"] = mode end
-    if (red ~= nil) then PersistData["YEELIGHT_PROFILE"]["red"] = red end
-    if (green ~= nil) then PersistData["YEELIGHT_PROFILE"]["green"] = green end
-    if (blue ~= nil) then PersistData["YEELIGHT_PROFILE"]["blue"] = blue end
-    if (temperature ~= nil) then
-        PersistData["YEELIGHT_PROFILE"]["temperature"] = temperature
-    end
-    if (brightness ~= nil) then
-        PersistData["YEELIGHT_PROFILE"]["brightness"] = brightness
-    end
-end
+

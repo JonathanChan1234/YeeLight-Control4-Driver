@@ -8,11 +8,13 @@
     debugString (string): the debug message to be logged in the composer lua screen
 ]] function dbg(debugMsg)
     debugMode = Properties["Debug Mode"] or "Off"
+    print(debugMode)
     if (debugMode == "Off") then
         return
     elseif (debugMode == "Print") then
         print(debugMsg)
     elseif (debugMode == "Print and Log") then
+	   print(debugMode)
         C4:ErrorLog(debugMsg)
         print(debugMsg)
     elseif (debugMode == "Log") then
@@ -29,10 +31,10 @@ end
     number: rgb value (0-100)
 ]]
 function convertLevelToRGB(level)
-    if (type(level) ~= number) then
+    if (type(level) ~= "number") then
         error("convertLevelToRGB Error: level must be in type of number")
     end
-    return math.ceil(value * 255 / 100)
+    return math.ceil(level * 255 / 100)
 end
 
 --[[

@@ -25,7 +25,6 @@
     <proxy proxybindingid="5003" name="Red Channel">light_v2</proxy>
     <proxy proxybindingid="5004" name="Green Channel">light_v2</proxy>
     <proxy proxybindingid="5005" name="Blue Channel">light_v2</proxy>
-    <proxy proxybindingid="5006" name="Online">light_v2</proxy>
   </proxies>
   <driver>DriverWorks</driver>
   <config>
@@ -81,7 +80,8 @@
       <property>
         <name>Connection Status</name>
         <type>STRING</type>
-        <readonly>false</readonly>
+        <readonly>true</readonly>
+        <default>Offline</default>
       </property>
     </properties>
     <actions>

@@ -8,7 +8,9 @@
     4. Set Brightness
     5. Set Color Temperature
     6. Set RGB Color
---]] require "utils"
+--]] 
+require "utils"
+require "constants"
 require "lighting_profile"
 
 --[[
@@ -63,7 +65,14 @@ end
 -- Set brightness level
 function SET_BRIGHT(brightness)
     dbg("set bright level" .. brightness)
-    sendToYeeLight(1, "adjust_bright", {brightness, 500})
+    local lastLightingProfile = RetrieveLastLightingProfile()
+    if (lastLightingProfile["mode"] == RGB_MODE) then
+	   SET_COLOR(convertRGBToDec(lastLightingProfile["red"], 
+		  lastLightingProfile["green"], lastLightingProfile["blue"]), 
+		  brightness)
+    else
+	   SET_TEMP(lastLightingProfile["temperature"], brightness)
+    end
 end
 
 -- Set RGB Color
