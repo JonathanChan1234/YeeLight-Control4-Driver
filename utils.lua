@@ -25,10 +25,9 @@
 end
 
 --[[
-    Convert RGB Level (0 - 100) to RGB Value (0 - 255)
-    level (number): rgb number (0-255)
-    return
-    number: rgb value (0-100)
+    Convert RGB Level (0-100) to RGB Value (0-255)
+    @params level (number): rgb number (0-255)
+    @return rgb value (number) (0-100)
 ]]
 function convertLevelToRGB(level)
     if (type(level) ~= "number") then
@@ -39,9 +38,8 @@ end
 
 --[[
     Convert RGB Value to Level
-    value(number): rgb value
-    return
-    number: rgb level (0-100)
+    @params value(number): rgb value (0-255)
+    @return rgb level (number) (0-100)
 ]]
 function convertRGBToLevel(value)
     if (type(value) ~= "number") then
@@ -53,9 +51,8 @@ end
 
 --[[
     Convert Color Temperature to Level
-    value(number): color temperature
-    return
-    number: color temperature level (0-100)
+    @params value(number): color temperature (1700-6500)
+    @return color temperature level (number) (0-100)
 ]]
 function convertTemperatureToLevel(temperature)
     if (type(temperature) ~= "number") then
@@ -68,9 +65,8 @@ end
 
 --[[
     Convert Level (0-100) to color temperature(1700-6500)
-    level (number): color temperature level (0 - 100)
-    return value
-    Color Temperature (number): 1700 - 6500
+    @params level(number): color temperature level (0-100)
+    @return Color Temperature(number)(1700-6500)
 ]]
 function convertLevelToTemperature(level)
     if (type(level) ~= "number") then
@@ -82,8 +78,10 @@ end
 
 --[[
     convert RGB value to dec
-    return value:
-    rgb dev value (number)
+    @params red(number)
+    @params green(number)
+    @params blue(number)
+    @return rgb dec value (number)
 ]]
 function convertRGBToDec(red, green, blue)
     -- type check
@@ -96,8 +94,9 @@ function convertRGBToDec(red, green, blue)
 end
 
 --[[
-    Utility function to convert decimal rgb value to hex rgb value
-    Return table {red = red, green = green, blue = blue}
+    Convert RGB value in dec to its seperate values (red, green, blue)
+    @params value RGB value in dec
+    @return table {red = red, green = green, blue = blue}
 ]]
 function convertDecToRGB(value)
     -- type check

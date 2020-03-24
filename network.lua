@@ -28,42 +28,58 @@ function ReceivedFromNetwork(idBinding, nPort, receivestring)
     -- Invalid JSON Format Response Data
     if (response == nil) then error("Invalid JSON response data") end
     -- No params feedback is received
-    if (response["params"] == nil) then dbg("Response: " .. receivestring) end
-
-    for key, value in pairs(response["params"]) do
-        if key == "power" then
-            if value == "off" then
-                -- Save the previous lighting state after turning off
-                SaveLightingHistory()
-                UpdateLightProperty(0, 0, 0, 0, 1700, nil, nil)
-            else
-                local history = RetrieveLightingHistory()
-                if Mode == TEMPERATURE_MODE then
-                    UpdateLightProperty(0, 0, 0, 100,
-                                        history["temperature"], nil)
-                end
-                if Mode == RGB_MODE then
-                    UpdateLightProperty(history["red"], history["green"],
-                                        history["blue"], 100,
-                                        1700, nil)
-                end
-            end
-        end
-        if key == "bright" then
-            dbg("brightness: " .. value)
-            UpdateLightProperty(nil, nil, nil, value, nil, nil)
-        end
-        if key == "rgb" then
-            local rgb = convertDecToRGB(value)
-            dbg("RGB Feedback: (" .. rgb["red"] .. "," .. rgb["green"] .. "," ..
-                    rgb["blue"] .. ")")
-            UpdateLightProperty(rgb["red"], rgb["green"], rgb["blue"], nil, nil,
-                                RGB_MODE)
-        end
-        if key == "ct" then
-            dbg("color temperature: " .. value)
-            UpdateLightProperty(0, 0, 0, nil, value, TEMPERATURE_MODE)
-        end
+    if (response["params"] ~= nil) then 
+	   for key, value in pairs(response["params"]) do
+		  if key == "power" then
+			 if value == "off" then
+				-- Save the previous lighting state after turning off
+				SaveLightingHistory()
+				UpdateLightProperty(0, 0, 0, 0, 1700, nil, nil)
+			 else
+				local history = RetrieveLightingHistory()
+				if Mode == TEMPERATURE_MODE then
+				    UpdateLightProperty(0, 0, 0, 100,
+								    history["temperature"], nil)
+				end
+				if Mode == RGB_MODE then
+				    UpdateLightProperty(history["red"], history["green"],
+								    history["blue"], 100,
+								    1700, nil)
+				end
+			 end
+		  end
+		  if key == "bright" then
+			 dbg("brightness: " .. value)
+			 UpdateLightProperty(nil, nil, nil, value, nil, nil)
+		  end
+		  if key == "rgb" then
+			 local rgb = convertDecToRGB(value)
+			 dbg("RGB Feedback: (" .. rgb["red"] .. "," .. rgb["green"] .. "," ..
+				    rgb["blue"] .. ")")
+			 UpdateLightProperty(rgb["red"], rgb["green"], rgb["blue"], nil, nil,
+							 RGB_MODE)
+		  end
+		  if key == "ct" then
+			 dbg("color temperature: " .. value)
+			 UpdateLightProperty(0, 0, 0, nil, value, TEMPERATURE_MODE)
+		  end
+	   end
+    end
+    
+    -- Update the light property if result is not null
+    if (response["result"] ~= nil and #response["result"] == 4) then
+	   local brightness = tonumber(response["result"][1])
+	   local color_mode = tonumber(response["result"][2])
+	   local rgb = convertDecToRGB(tonumber(response["result"][3]))
+	   local color_temperature = tonumber(response["result"][4])
+	   if (color_mode == 2) then -- color temperature mode
+		  UpdateLightProperty(0, 0, 0, brightness, 
+			 color_temperature, TEMPERATURE_MODE)
+	   end
+	   if (color_mode == 1) then -- rgb mode
+		  UpdateLightProperty(rgb["red"], rgb["green"], rgb["blue"], 
+			 brightness, 0, RGB_MODE)
+	   end
     end
 end
 

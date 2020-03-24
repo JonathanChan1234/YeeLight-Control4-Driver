@@ -1,3 +1,110 @@
-{\rtf1\ansi\ansicpg1252\deff0\deflang1033\deflangfe1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}{\f1\froman\fprq2\fcharset0 Times New Roman;}}
-\viewkind4\uc1\pard\sa200\sl276\slmult1\f0\fs22 HKT Smart C4\f1\par
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033\deflangfe1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Calibri;}}
+\viewkind4\uc1\pard\f0\fs22 # YeeLight Smart LED Bulb (Xiaomi) Control4 Driver\par
+\par
+> Control4 Driver to toggle, change RGB color, color temperature of Yeelight\par
+\par
+> Compatible to OS 2.10 or above\par
+\par
+### Sample Control Command\par
+\par
+```bash\par
+Get the current status of the light\par
+\{"id":1,"method":"get_prop","params":["power", "name", "rgb", "bright", "ct", "color_mode"]\}\par
+\{"id":1,"method":"get_prop","params":["power", "name", "rgb", "bright", "ct"]\}\par
+\par
+\par
+Set the rgb value of the light\par
+\{"id":1,"method":"set_rgb","params":[16579587, "smooth", 500]\}\par
+\par
+Set the brightness of the light:\par
+\{"id":1,"method":"set_bright","params":[50, "smooth", 500]\}\par
+\par
+Toggle\par
+\{"id":1,"method":"toggle","params":[]\}\par
+\par
+Set name\par
+\{"id":1,"method":"set_name","params":["my_bulb"]\}\par
+\par
+Set cron Job\par
+\{"id":1,"method":"cron_add","params":[0, 1]\}\par
+\par
+Set scene\par
+\{"id":1,"method":"set_scene","params":["color", 16579587, 90]\}\par
+\{"id":1,"method":"set_scene","params":["color",10027008, 85]\}\par
+\par
+Set brightness\par
+\{"id":1,"method":"adjust_bright","params":[-10, 500]\}\par
+```\par
+\par
+### Proxy Binding Id\par
+\par
+5001: Brightness\par
+\par
+5002: Color Temperature\par
+\par
+5003: Red\par
+\par
+5004: Green\par
+\par
+5005: Blue\par
+\par
+### Control Binding Id\par
+\par
+301: On Button Link\par
+\par
+302: Off Button Link\par
+\par
+303: Toggle Button Link\par
+\par
+## Project Structure\par
+\par
+1. action.lua\par
+\par
+-   implement the function ExecuteCommand(strCommand, tParams)\par
+-   handle the action tab\par
+\par
+2. connection.lua\par
+\par
+-   implement the function OnConnectionStatusChanged(idBinding, nPort, strStatus)\par
+-   listen to the change of the TCP connection between the controller and yeelight\par
+\par
+3. constants.lua\par
+\par
+-   frequently used constants (proxy binding id, control binding id, property key value)\par
+\par
+4. driver.lua\par
+\par
+-   entry point of the whole driver\par
+\par
+5. lighting_profile.lua\par
+\par
+-   "get" and "set" the persist data table (provided by the control4 DriverWork SDK)\par
+-   "YEELIGHT_PROFILE": contains the current color mode, RGB, color temperature and brightness\par
+-   "YEELIGHT_HISTORY": contains the last known status of the yeelight\par
+-   Both table contains the same data structure\par
+\par
+6. network.lua\par
+\par
+-   implement the function ReceivedFromNetwork (idBinding, nPort, receviedString)\par
+-   handle the feedback data received from yeelight and update the driver property including the driver property in composer and proxy (mobile app)\par
+\par
+7. properties.lua\par
+\par
+-   implement the function OnPropertyChanged(strProperty)\par
+-   listen to the change of driver properties (only apply for manual change)\par
+-   will not be called for C4:UpdateProperty() function\par
+\par
+8. proxy.lua\par
+\par
+-   implement the function ReceivedFromProxy(bindingId, strCommand, tParams)\par
+-   handle the ui interaction and update the light status correspondingly\par
+\par
+9.  utils.lua\par
+\par
+-   all the utility functions (mathematics, string, debug)\par
+-   handle the conversion between level and actual value for rgb color and color temperature\par
+\par
+10. yeelight_command.lua\par
+\par
+-   implement the actual commands that will be sent to yeelight\par
 }

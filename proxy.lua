@@ -21,9 +21,16 @@ function ReceivedFromProxy(idBinding, strCommand, tParams)
     end
 end
 
+function PROXY_CMD.GET_EXTRAS_SETUP(idBinding, tParams)
+    GetYeelightProfile()
+end
+
 function PROXY_CMD.ON(idBinding, tParams) YON() end
+
 function PROXY_CMD.OFF(idBinding, tParams) YOFF() end
+
 function PROXY_CMD.TOGGLE(idBinding, tParams) Toggle() end
+
 function PROXY_CMD.DO_PUSH(idBinding, tParams)
     if (idBinding == ON_BINDING) then
         YON()
